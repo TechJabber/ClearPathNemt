@@ -1,118 +1,194 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ProviderEntity } from '../database/entities/provider.entity';
-import { ProviderApplicationEntity } from '../database/entities/provider-application.entity';
-import { ProviderProfile, ProviderApplication } from '@clear-path/shared';
+import { SupabaseService } from '../database/supabase.service';
+import { ProviderProfile, ProviderApplication, USState } from '@clear-path/shared';
+import { v4 as uuidv4 } from 'uuid';
+
+interface ProviderRow {
+  id: string;
+  user_id: string;
+  company_name: string;
+  business_license: string;
+  ein: string;
+  state: string;
+  address: string;
+  city: string;
+  zip_code: string;
+  phone: string;
+  email: string;
+  website?: string;
+  status: string;
+  rejection_reason?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ProviderApplicationRow {
+  id: string;
+  provider_id: string;
+  status: string;
+  company_name: string;
+  business_license: string;
+  ein: string;
+  state_of_operation: string;
+  primary_contact_name: string;
+  primary_contact_email: string;
+  primary_contact_phone: string;
+  general_liability_insurance: boolean;
+  commercial_auto_insurance: boolean;
+  workers_comp_insurance: boolean;
+  insurance_documents?: string[];
+  number_of_drivers: number;
+  average_vehicle_age: number;
+  documents?: any[];
+  submitted_at?: string;
+  reviewed_at?: string;
+  reviewed_by?: string;
+  rejection_reason?: string;
+  created_at: string;
+  updated_at: string;
+}
 
 @Injectable()
 export class ProvidersService {
-  constructor(
-    @InjectRepository(ProviderEntity)
-    private readonly providerRepository: Repository<ProviderEntity>,
-    @InjectRepository(ProviderApplicationEntity)
-    private readonly applicationRepository: Repository<ProviderApplicationEntity>,
-  ) {}
+  constructor(private readonly supabase: SupabaseService) {}
 
   async createApplication(userId: string, input: any): Promise<ProviderApplication> {
     // Check if provider already exists
-    const existingProvider = await this.providerRepository.findOne({
-      where: { userId },
+    const existingProviders = await this.supabase.select<ProviderRow>('providers', {
+      user_id: userId,
     });
 
-    if (existingProvider) {
+    if (existingProviders.length > 0) {
       throw new BadRequestException('Provider already exists for this user');
     }
 
+    const providerId = uuidv4();
+    const now = new Date().toISOString();
+
     // Create provider
-    const provider = this.providerRepository.create({
-      userId,
-      companyName: input.companyName,
-      businessLicense: input.businessLicense,
+    const provider = await this.supabase.insert<ProviderRow>('providers', {
+      id: providerId,
+      user_id: userId,
+      company_name: input.companyName,
+      business_license: input.businessLicense,
       ein: input.ein,
       state: input.state,
       address: input.address,
       city: input.city,
-      zipCode: input.zipCode,
+      zip_code: input.zipCode,
       phone: input.phone,
       email: input.email,
       website: input.website,
       status: 'pending',
+      created_at: now,
+      updated_at: now,
     });
-
-    const savedProvider = await this.providerRepository.save(provider);
 
     // Create application
-    const application = this.applicationRepository.create({
-      providerId: savedProvider.id,
-      companyName: input.companyName,
-      businessLicense: input.businessLicense,
-      ein: input.ein,
-      stateOfOperation: input.state,
-      primaryContactName: input.primaryContactName,
-      primaryContactEmail: input.primaryContactEmail,
-      primaryContactPhone: input.primaryContactPhone,
-      generalLiabilityInsurance: input.generalLiabilityInsurance || false,
-      commercialAutoInsurance: input.commercialAutoInsurance || false,
-      workersCompInsurance: input.workersCompInsurance || false,
-      numberOfDrivers: input.numberOfDrivers,
-      averageVehicleAge: input.averageVehicleAge,
-      status: 'draft',
-    });
+    const application = await this.supabase.insert<ProviderApplicationRow>(
+      'provider_applications',
+      {
+        id: uuidv4(),
+        provider_id: provider.id,
+        company_name: input.companyName,
+        business_license: input.businessLicense,
+        ein: input.ein,
+        state_of_operation: input.state,
+        primary_contact_name: input.primaryContactName,
+        primary_contact_email: input.primaryContactEmail,
+        primary_contact_phone: input.primaryContactPhone,
+        general_liability_insurance: input.generalLiabilityInsurance || false,
+        commercial_auto_insurance: input.commercialAutoInsurance || false,
+        workers_comp_insurance: input.workersCompInsurance || false,
+        number_of_drivers: input.numberOfDrivers,
+        average_vehicle_age: input.averageVehicleAge,
+        status: 'draft',
+        created_at: now,
+        updated_at: now,
+      },
+    );
 
-    return this.applicationRepository.save(application);
+    return this.mapApplicationRow(application);
   }
 
   async submitApplication(applicationId: string): Promise<ProviderApplication> {
-    const application = await this.applicationRepository.findOne({
-      where: { id: applicationId },
-    });
+    const applications = await this.supabase.select<ProviderApplicationRow>(
+      'provider_applications',
+      { id: applicationId },
+    );
 
-    if (!application) {
+    if (applications.length === 0) {
       throw new NotFoundException('Application not found');
     }
 
-    application.status = 'submitted';
-    application.submittedAt = new Date();
+    const updated = await this.supabase.update<ProviderApplicationRow>(
+      'provider_applications',
+      applicationId,
+      {
+        status: 'submitted',
+        submitted_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+    );
 
-    return this.applicationRepository.save(application);
+    return this.mapApplicationRow(updated);
   }
 
   async getApplications(providerId?: string): Promise<ProviderApplication[]> {
-    const query = this.applicationRepository.createQueryBuilder('app');
+    let applications: ProviderApplicationRow[];
 
     if (providerId) {
-      query.where('app.providerId = :providerId', { providerId });
+      applications = await this.supabase.select<ProviderApplicationRow>(
+        'provider_applications',
+        { provider_id: providerId },
+      );
+    } else {
+      applications = await this.supabase.select<ProviderApplicationRow>(
+        'provider_applications',
+      );
     }
 
-    return query.orderBy('app.createdAt', 'DESC').getMany();
+    return applications.map((app) => this.mapApplicationRow(app));
   }
 
   async approveApplication(applicationId: string, reviewedBy: string): Promise<ProviderApplication> {
-    const application = await this.applicationRepository.findOne({
-      where: { id: applicationId },
-      relations: ['provider'],
-    });
+    const applications = await this.supabase.select<ProviderApplicationRow>(
+      'provider_applications',
+      { id: applicationId },
+    );
 
-    if (!application) {
+    if (applications.length === 0) {
       throw new NotFoundException('Application not found');
     }
 
-    application.status = 'approved';
-    application.reviewedAt = new Date();
-    application.reviewedBy = reviewedBy;
+    const app = applications[0];
+    const now = new Date().toISOString();
+
+    // Update application
+    const updated = await this.supabase.update<ProviderApplicationRow>(
+      'provider_applications',
+      applicationId,
+      {
+        status: 'approved',
+        reviewed_at: now,
+        reviewed_by: reviewedBy,
+        updated_at: now,
+      },
+    );
 
     // Update provider status
-    const provider = await this.providerRepository.findOne({
-      where: { id: application.providerId },
+    const providers = await this.supabase.select<ProviderRow>('providers', {
+      id: app.provider_id,
     });
 
-    if (provider) {
-      provider.status = 'approved';
-      await this.providerRepository.save(provider);
+    if (providers.length > 0) {
+      await this.supabase.update<ProviderRow>('providers', providers[0].id, {
+        status: 'approved',
+        updated_at: now,
+      });
     }
 
-    return this.applicationRepository.save(application);
+    return this.mapApplicationRow(updated);
   }
 
   async rejectApplication(
@@ -120,36 +196,96 @@ export class ProvidersService {
     reviewedBy: string,
     rejectionReason: string,
   ): Promise<ProviderApplication> {
-    const application = await this.applicationRepository.findOne({
-      where: { id: applicationId },
-    });
+    const applications = await this.supabase.select<ProviderApplicationRow>(
+      'provider_applications',
+      { id: applicationId },
+    );
 
-    if (!application) {
+    if (applications.length === 0) {
       throw new NotFoundException('Application not found');
     }
 
-    application.status = 'rejected';
-    application.reviewedAt = new Date();
-    application.reviewedBy = reviewedBy;
-    application.rejectionReason = rejectionReason;
+    const app = applications[0];
+    const now = new Date().toISOString();
+
+    // Update application
+    const updated = await this.supabase.update<ProviderApplicationRow>(
+      'provider_applications',
+      applicationId,
+      {
+        status: 'rejected',
+        reviewed_at: now,
+        reviewed_by: reviewedBy,
+        rejection_reason: rejectionReason,
+        updated_at: now,
+      },
+    );
 
     // Update provider status
-    const provider = await this.providerRepository.findOne({
-      where: { id: application.providerId },
+    const providers = await this.supabase.select<ProviderRow>('providers', {
+      id: app.provider_id,
     });
 
-    if (provider) {
-      provider.status = 'rejected';
-      provider.rejectionReason = rejectionReason;
-      await this.providerRepository.save(provider);
+    if (providers.length > 0) {
+      await this.supabase.update<ProviderRow>('providers', providers[0].id, {
+        status: 'rejected',
+        rejection_reason: rejectionReason,
+        updated_at: now,
+      });
     }
 
-    return this.applicationRepository.save(application);
+    return this.mapApplicationRow(updated);
   }
 
   async getProvider(providerId: string): Promise<ProviderProfile | null> {
-    return this.providerRepository.findOne({
-      where: { id: providerId },
-    });
+    const provider = await this.supabase.findOne<ProviderRow>('providers', providerId);
+    return provider ? this.mapProviderRow(provider) : null;
+  }
+
+  private mapProviderRow(row: ProviderRow): ProviderProfile {
+    return {
+      id: row.id,
+      userId: row.user_id,
+      companyName: row.company_name,
+      businessLicense: row.business_license,
+      ein: row.ein,
+      state: row.state as USState,
+      address: row.address,
+      city: row.city,
+      phone: row.phone,
+      email: row.email,
+      website: row.website,
+      status: row.status as any,
+      createdAt: new Date(row.created_at),
+      updatedAt: new Date(row.updated_at),
+    };
+  }
+
+  private mapApplicationRow(row: ProviderApplicationRow): ProviderApplication {
+    return {
+      id: row.id,
+      providerId: row.provider_id,
+      status: row.status as any,
+      companyName: row.company_name,
+      businessLicense: row.business_license,
+      ein: row.ein,
+      stateOfOperation: row.state_of_operation,
+      primaryContactName: row.primary_contact_name,
+      primaryContactEmail: row.primary_contact_email,
+      primaryContactPhone: row.primary_contact_phone,
+      generalLiabilityInsurance: row.general_liability_insurance,
+      commercialAutoInsurance: row.commercial_auto_insurance,
+      workersCompInsurance: row.workers_comp_insurance,
+      insuranceDocuments: row.insurance_documents,
+      numberOfDrivers: row.number_of_drivers,
+      averageVehicleAge: row.average_vehicle_age,
+      documents: row.documents,
+      submittedAt: row.submitted_at ? new Date(row.submitted_at) : undefined,
+      reviewedAt: row.reviewed_at ? new Date(row.reviewed_at) : undefined,
+      reviewedBy: row.reviewed_by,
+      rejectionReason: row.rejection_reason,
+      createdAt: new Date(row.created_at),
+      updatedAt: new Date(row.updated_at),
+    };
   }
 }
