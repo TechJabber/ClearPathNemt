@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clear Path NEMT - Start Development Servers
-# Bash Script (works on Mac, Linux, WSL, Git Bash)
+# Bash Script (works on Mac, Linux, WSL, Git Bash) - Using npm
 
 echo ""
 echo "================================"
@@ -12,7 +12,7 @@ echo ""
 # Check if we're in the right directory
 if [ ! -f "package.json" ]; then
     echo "Error: package.json not found. Are you in the project root?"
-    echo "Please run this script from: C:\Working\Websites\NEMT"
+    echo "Please run this script from: $(pwd)"
     read -p "Press Enter to exit"
     exit 1
 fi
@@ -22,7 +22,7 @@ if [ ! -d "node_modules" ]; then
     echo "Installing dependencies..."
     echo "This may take a few minutes on first run..."
     echo ""
-    pnpm install
+    npm install
     if [ $? -ne 0 ]; then
         echo "Error: Installation failed"
         read -p "Press Enter to exit"
@@ -41,4 +41,4 @@ echo "Press Ctrl+C to stop all servers"
 echo ""
 
 # Start the dev servers
-pnpm dev
+npm run dev

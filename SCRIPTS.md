@@ -2,8 +2,13 @@
 
 These scripts make it easy to start and stop your development environment without remembering commands.
 
+**Now using npm (stable)** ✅
+- Replaced pnpm with npm to avoid registry issues
+- All scripts updated to use `npm install` and `npm run dev`
+- More reliable on Windows and across platforms
+
 **Available in multiple formats:**
-- 🪟 Windows Batch (.bat) - For Windows Command Prompt
+- 🪟 Windows Batch (.bat) - For Windows Command Prompt (Recommended)
 - 🐧 Bash Scripts (.sh) - For Mac, Linux, WSL, Git Bash
 - 💻 PowerShell (.ps1) - For PowerShell users
 

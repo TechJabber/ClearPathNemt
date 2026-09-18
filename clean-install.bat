@@ -1,17 +1,18 @@
 @echo off
-REM Clear Path NEMT - Clean Install Script
-REM Fixes pnpm registry issues
+REM Clear Path NEMT - Clean Install Script (npm version)
+REM Completely removes pnpm and uses npm instead
 
 echo.
 echo ================================
-echo Clean Install ^& Setup
+echo Clean Install (Using npm)
 echo ================================
 echo.
 echo This will:
-echo 1. Clear pnpm cache
+echo 1. Stop any running servers
 echo 2. Remove node_modules
-echo 3. Remove lock files
-echo 4. Reinstall everything fresh
+echo 3. Clear npm cache
+echo 4. Uninstall pnpm (if installed)
+echo 5. Reinstall everything with npm
 echo.
 
 set /p confirm="Continue? (y/n): "
@@ -25,31 +26,28 @@ echo Step 1: Stopping any running servers...
 taskkill /F /IM node.exe 2>nul
 timeout /t 2 /nobreak
 
-echo Step 2: Clearing pnpm cache...
-call pnpm store prune
-
-echo Step 3: Removing lock file...
-if exist pnpm-lock.yaml del pnpm-lock.yaml
-
-echo Step 4: Removing node_modules...
+echo Step 2: Removing node_modules...
 if exist node_modules rmdir /s /q node_modules
 for /d %%d in (packages\*) do (
     if exist "%%d\node_modules" rmdir /s /q "%%d\node_modules"
 )
 
-echo Step 5: Clearing npm cache...
+echo Step 3: Removing lock files...
+if exist pnpm-lock.yaml del pnpm-lock.yaml
+if exist package-lock.json del package-lock.json
+
+echo Step 4: Clearing npm cache...
 call npm cache clean --force
 
-echo.
-echo Step 6: Resetting pnpm config to default registry...
-call pnpm config set registry https://registry.npmjs.org/
+echo Step 5: Uninstalling pnpm globally (if installed)...
+call npm uninstall -g pnpm 2>nul
 
 echo.
-echo Step 7: Installing dependencies...
-echo This will take a few minutes...
+echo Step 6: Installing dependencies with npm...
+echo This will take 2-5 minutes...
 echo.
 
-call pnpm install --force
+call npm install
 
 if errorlevel 0 (
     echo.
@@ -63,10 +61,10 @@ if errorlevel 0 (
     echo.
     echo [ERROR] Installation failed
     echo.
-    echo Try these alternatives:
-    echo 1. npm install (use npm instead of pnpm)
-    echo 2. Check your internet connection
-    echo 3. Check https://registry.npmjs.org is accessible
+    echo Check:
+    echo 1. Internet connection
+    echo 2. Node.js installed: node --version
+    echo 3. npm updated: npm --version (should be 8+)
     echo.
 )
 

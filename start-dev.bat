@@ -1,6 +1,6 @@
 @echo off
 REM Clear Path NEMT - Start Development Servers
-REM Windows Batch Script
+REM Windows Batch Script (Using npm - stable)
 
 echo.
 echo ================================
@@ -21,7 +21,7 @@ if not exist "node_modules" (
     echo Installing dependencies...
     echo This may take a few minutes on first run...
     echo.
-    call pnpm install
+    call npm install
     if errorlevel 1 (
         echo Error: Installation failed
         pause
@@ -40,6 +40,6 @@ echo Press Ctrl+C to stop all servers
 echo.
 
 REM Start the dev servers
-pnpm dev
+call npm run dev
 
 pause
