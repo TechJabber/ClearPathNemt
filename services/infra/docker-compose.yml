@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: clear-path-db
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      POSTGRES_DB: ${DATABASE_NAME:-clear_path_nemt}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - clear-path-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: clear-path-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - clear-path-network
+
+  backend:
+    build:
+      context: ../../packages/backend
+      dockerfile: ../../services/infra/docker/backend.Dockerfile
+    container_name: clear-path-api
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      DATABASE_NAME: ${DATABASE_NAME:-clear_path_nemt}
+      JWT_SECRET: ${JWT_SECRET:-dev_jwt_secret_change_in_production}
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../../packages/backend/src:/app/src
+    networks:
+      - clear-path-network
+
+  frontend:
+    build:
+      context: ../../packages/frontend
+      dockerfile: ../../services/infra/docker/frontend.Dockerfile
+    container_name: clear-path-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_DOMAIN: goclearpathemt.com
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ../../packages/frontend/pages:/app/pages
+      - ../../packages/frontend/src:/app/src
+    networks:
+      - clear-path-network
+
+networks:
+  clear-path-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

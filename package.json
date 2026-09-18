@@ -1,0 +1,26 @@
+{
+  "name": "clear-path-nemt",
+  "version": "0.1.0",
+  "description": "Clear Path NEMT - Non-Emergency Medical Transportation SaaS",
+  "private": true,
+  "packageManager": "pnpm@8.0.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "test:watch": "pnpm -r test:watch",
+    "test:cov": "pnpm -r test:cov",
+    "type-check": "pnpm -r type-check",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "docker:build": "docker-compose -f services/infra/docker-compose.yml build",
+    "docker:up": "docker-compose -f services/infra/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f services/infra/docker-compose.yml down",
+    "docker:logs": "docker-compose -f services/infra/docker-compose.yml logs -f",
+    "migrate": "pnpm --filter @glyde/backend migrate"
+  },
+  "keywords": ["nemt", "medical-transportation", "healthcare", "saas"],
+  "author": "Clear Path Labs",
+  "license": "MIT"
+}

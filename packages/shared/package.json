@@ -1,0 +1,19 @@
+{
+  "name": "@clear-path/shared",
+  "version": "0.1.0",
+  "description": "Shared types for Clear Path NEMT",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": ["nemt", "types", "shared"],
+  "author": "Clear Path Labs",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.2.0"
+  }
+}
