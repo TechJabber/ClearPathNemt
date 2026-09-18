@@ -9,14 +9,14 @@ export class SupabaseService {
 
   constructor(private configService: ConfigService) {
     const supabaseUrl = this.configService.get<string>('SUPABASE_URL');
-    const supabaseServiceKey = this.configService.get<string>('SUPABASE_SERVICE_KEY');
+    const supabaseSecretKey = this.configService.get<string>('SUPABASE_SECRET_KEY');
 
-    if (!supabaseUrl || !supabaseServiceKey) {
+    if (!supabaseUrl || !supabaseSecretKey) {
       this.logger.error('Supabase credentials not configured');
       throw new Error('Missing Supabase configuration');
     }
 
-    this.client = createClient(supabaseUrl, supabaseServiceKey);
+    this.client = createClient(supabaseUrl, supabaseSecretKey);
     this.logger.log('✅ Supabase client initialized');
   }
 

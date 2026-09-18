@@ -44,14 +44,16 @@ In your Supabase project dashboard:
 1. Go to **Settings** → **API**
 2. Copy:
    - **Project URL** (e.g., `https://xxx.supabase.co`)
-   - **Anon Key** (public key for frontend)
-   - **Service Key** (secret key for backend)
+   - **Publishable Key** (public key for frontend)
+   - **Secret Key** (secret key for backend)
+   - **JWKS URL** (for JWT verification)
 
 3. Update `.env.local`:
    ```bash
    SUPABASE_URL=https://xxx.supabase.co
-   SUPABASE_ANON_KEY=your-anon-key-here
-   SUPABASE_SERVICE_KEY=your-service-key-here
+   SUPABASE_SECRET_KEY=your-secret-key-here
+   SUPABASE_PUBLISHABLE_KEY=your-publishable-key-here
+   SUPABASE_JWKS_URL=https://xxx.supabase.co/auth/v1/jwks
    ```
 
 ### 3. Initialize Database Schema
@@ -124,7 +126,29 @@ NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 3. Start Development Servers
+### 3. Configure Environment Variables
+
+Your `.env.local` should look like:
+
+```bash
+# Supabase - Update with YOUR actual credentials
+SUPABASE_URL=https://ucgbuwusqqcgrfzfvtuf.supabase.co
+SUPABASE_SECRET_KEY=your-secret-key-here
+SUPABASE_PUBLISHABLE_KEY=your-publishable-key-here
+SUPABASE_JWKS_URL=https://ucgbuwusqqcgrfzfvtuf.supabase.co/auth/v1/jwks
+
+# Backend
+NODE_ENV=development
+PORT=3001
+JWT_SECRET=dev_jwt_secret_change_in_production_min_32_chars
+
+# Frontend
+NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_SUPABASE_URL=https://ucgbuwusqqcgrfzfvtuf.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key-here
+```
+
+### 4. Start Development Servers
 
 ```bash
 # Start all services in parallel
