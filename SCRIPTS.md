@@ -2,6 +2,11 @@
 
 These scripts make it easy to start and stop your development environment without remembering commands.
 
+**Available in multiple formats:**
+- 🪟 Windows Batch (.bat) - For Windows Command Prompt
+- 🐧 Bash Scripts (.sh) - For Mac, Linux, WSL, Git Bash
+- 💻 PowerShell (.ps1) - For PowerShell users
+
 ## 🚀 Quick Start
 
 ### Option 1: Batch Files (Easiest)
@@ -32,12 +37,25 @@ These scripts make it easy to start and stop your development environment withou
 
 ## 📁 Script Files
 
+### Windows Batch Scripts
 | File | Purpose | Usage |
 |------|---------|-------|
-| `start-dev.bat` | Start servers (Windows Batch) | Double-click or `start-dev.bat` |
-| `stop-dev.bat` | Stop servers (Windows Batch) | Double-click or `stop-dev.bat` |
-| `start-dev.ps1` | Start servers (PowerShell) | `.\start-dev.ps1` |
-| `stop-dev.ps1` | Stop servers (PowerShell) | `.\stop-dev.ps1` |
+| `start-dev.bat` | Start servers | Double-click or `start-dev.bat` |
+| `stop-dev.bat` | Stop servers | Double-click or `stop-dev.bat` |
+| `clean-install.bat` | Fix pnpm issues | Double-click or `clean-install.bat` |
+
+### Bash Scripts (Mac/Linux/WSL/Git Bash)
+| File | Purpose | Usage |
+|------|---------|-------|
+| `start-dev.sh` | Start servers | `./start-dev.sh` or `bash start-dev.sh` |
+| `stop-dev.sh` | Stop servers | `./stop-dev.sh` or `bash stop-dev.sh` |
+| `clean-install.sh` | Fix pnpm issues | `./clean-install.sh` or `bash clean-install.sh` |
+
+### PowerShell Scripts
+| File | Purpose | Usage |
+|------|---------|-------|
+| `start-dev.ps1` | Start servers | `.\start-dev.ps1` |
+| `stop-dev.ps1` | Stop servers | `.\stop-dev.ps1` |
 
 ## ✨ Features
 
@@ -81,9 +99,34 @@ These scripts make it easy to start and stop your development environment withou
 
 ## 🚨 Troubleshooting
 
+### ❌ pnpm Registry Error (ERR_PNPM_META_FETCH_FAIL)
+**Error looks like:** `Value of "this" must be of type URLSearchParams`
+
+**Quick Fix:**
+```bash
+# Windows Batch:
+clean-install.bat
+
+# Bash/Mac/Linux:
+./clean-install.sh
+```
+
+**What it does:**
+1. Clears pnpm cache
+2. Removes all node_modules
+3. Removes lock files
+4. Reinstalls everything fresh
+5. Takes 2-5 minutes
+
+**If that doesn't work, use npm instead:**
+```bash
+npm install
+npm run dev
+```
+
 ### "node_modules missing" error
 - The script will auto-install on first run
-- If it fails, run manually: `pnpm install`
+- If it fails, run: `clean-install.bat` or `./clean-install.sh`
 
 ### Servers won't start
 - Check if ports 3000/3001 are in use
@@ -95,6 +138,20 @@ These scripts make it easy to start and stop your development environment withou
 - Type: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 - Press Y to confirm
 - Now scripts will work
+
+### Bash scripts won't run on Windows
+**Option 1: Git Bash (Recommended)**
+- Install Git for Windows
+- Right-click folder → "Git Bash Here"
+- Run: `./start-dev.sh`
+
+**Option 2: WSL (Windows Subsystem for Linux)**
+- Install WSL2
+- Open WSL terminal
+- Navigate to project and run: `./start-dev.sh`
+
+**Option 3: Use Batch files instead**
+- Just use `start-dev.bat` (no installation needed)
 
 ## 💡 Pro Tips
 
