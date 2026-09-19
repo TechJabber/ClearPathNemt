@@ -91,7 +91,9 @@ export default function BookRide() {
               <p className="text-gray-600 mb-6">Choose the service that best fits your needs</p>
 
               <div className="grid grid-cols-1 gap-4 mb-6">
-                {serviceTypes.map(service => (
+                {serviceTypes.map(service => {
+                  const IconComponent = service.icon;
+                  return (
                   <button
                     key={service.id}
                     type="button"
@@ -107,7 +109,7 @@ export default function BookRide() {
                   >
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
-                        <service.icon
+                        <IconComponent
                           size={32}
                           style={{
                             color: formData.rideType === service.id ? '#003366' : '#D4A574',
@@ -125,7 +127,8 @@ export default function BookRide() {
                       )}
                     </div>
                   </button>
-                ))}
+                );
+                })}
               </div>
 
               {/* Special Requests */}
