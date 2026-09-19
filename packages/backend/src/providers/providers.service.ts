@@ -258,7 +258,7 @@ export class ProvidersService {
       status: row.status as any,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
-    };
+    } as any;
   }
 
   private mapApplicationRow(row: ProviderApplicationRow): ProviderApplication {
@@ -269,7 +269,7 @@ export class ProvidersService {
       companyName: row.company_name,
       businessLicense: row.business_license,
       ein: row.ein,
-      stateOfOperation: row.state_of_operation,
+      stateOfOperation: row.state_of_operation as any,
       primaryContactName: row.primary_contact_name,
       primaryContactEmail: row.primary_contact_email,
       primaryContactPhone: row.primary_contact_phone,

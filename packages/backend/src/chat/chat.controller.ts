@@ -28,7 +28,7 @@ export class ChatController {
 
   @Post('conversation')
   @ApiOperation({ summary: 'Get conversation history' })
-  async getConversation(@Body() { conversationId }: { conversationId: string }) {
+  async getConversation(@Body() { conversationId }: { conversationId: string }): Promise<any> {
     return this.chatService.getConversationHistory(conversationId);
   }
 }

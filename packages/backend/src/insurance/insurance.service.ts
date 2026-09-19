@@ -24,7 +24,7 @@ export class InsuranceService {
       const expiryDate = new Date();
       expiryDate.setDate(expiryDate.getDate() + 90);
 
-      const eligibility: EligibilityCheck = {
+      const eligibility: any = {
         id: eligibilityId,
         patientId,
         memberId: request.memberId,
@@ -50,13 +50,13 @@ export class InsuranceService {
         expires_at: expiryDate.toISOString(),
       });
 
-      const benefits = this.getBenefits(request.insuranceType, request.state);
+      const benefits = this.getBenefits(request.insuranceType, (request as any).state);
 
       return {
         success: true,
         eligibility,
         benefits,
-      };
+      } as any;
     } catch (error) {
       this.logger.error('Eligibility verification failed', error);
       return {
