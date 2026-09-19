@@ -24,19 +24,19 @@ export default function BookRide() {
       id: 'ambulatory',
       title: 'Ambulatory',
       description: 'For mobile patients who can walk',
-      icon: Users,
+      iconType: 'users',
     },
     {
       id: 'wheelchair',
       title: 'Wheelchair Accessible',
       description: 'Full wheelchair accessibility',
-      icon: Wheelchair,
+      iconType: 'wheelchair',
     },
     {
       id: 'stretcher',
       title: 'Stretcher',
       description: 'For patients requiring a stretcher',
-      icon: Heart,
+      iconType: 'heart',
     },
   ];
 
@@ -91,31 +91,47 @@ export default function BookRide() {
               <p className="text-gray-600 mb-6">Choose the service that best fits your needs</p>
 
               <div className="grid grid-cols-1 gap-4 mb-6">
-                {serviceTypes.map(service => {
-                  const IconComponent = service.icon;
-                  return (
-                    <button
-                      key={service.id}
-                      type="button"
-                      onClick={() => handleServiceSelect(service.id)}
-                      className={`p-6 rounded-lg border-2 text-left transition-all hover:shadow-md ${
-                        formData.rideType === service.id
-                          ? 'border-0 text-white'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                      style={{
-                        backgroundColor: formData.rideType === service.id ? '#D4A574' : '#f9fafb',
-                      }}
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                          <IconComponent
+                {serviceTypes.map(service => (
+                  <button
+                    key={service.id}
+                    type="button"
+                    onClick={() => handleServiceSelect(service.id)}
+                    className={`p-6 rounded-lg border-2 text-left transition-all hover:shadow-md ${
+                      formData.rideType === service.id
+                        ? 'border-0 text-white'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    style={{
+                      backgroundColor: formData.rideType === service.id ? '#D4A574' : '#f9fafb',
+                    }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        {service.iconType === 'users' && (
+                          <Users
                             size={32}
                             style={{
                               color: formData.rideType === service.id ? '#003366' : '#D4A574',
                             }}
                           />
-                        </div>
+                        )}
+                        {service.iconType === 'wheelchair' && (
+                          <Wheelchair
+                            size={32}
+                            style={{
+                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
+                            }}
+                          />
+                        )}
+                        {service.iconType === 'heart' && (
+                          <Heart
+                            size={32}
+                            style={{
+                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
+                            }}
+                          />
+                        )}
+                      </div>
                         <div className="flex-1">
                           <h3 className="text-lg font-bold">{service.title}</h3>
                           <p className={formData.rideType === service.id ? 'opacity-90' : 'text-gray-600'}>
@@ -127,8 +143,7 @@ export default function BookRide() {
                         )}
                       </div>
                     </button>
-                  );
-                })}
+                ))}
               </div>
 
               {/* Special Requests */}
