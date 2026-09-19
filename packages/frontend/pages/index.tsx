@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Users, Clock, Heart } from 'lucide-react';
 import Navigation from '../components/Navigation';
+import ImmediateHelp from '../components/ImmediateHelp';
 
 export default function Home() {
   return (
@@ -85,6 +86,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Immediate Help Section */}
+      <ImmediateHelp />
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4">

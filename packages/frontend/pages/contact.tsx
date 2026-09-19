@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Navigation from '../components/Navigation';
+import ImmediateHelp from '../components/ImmediateHelp';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -83,6 +84,8 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      <ImmediateHelp />
 
       <footer className="bg-gray-900 text-white py-12 px-4 mt-20">
         <div className="max-w-7xl mx-auto text-center text-gray-400">
