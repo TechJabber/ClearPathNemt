@@ -1,15 +1,57 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Logo from '../../components/Logo';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement API call to backend
-    console.log({ email, password });
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || 'Login failed. Please check your email and password.');
+        setLoading(false);
+        return;
+      }
+
+      // Store auth token
+      localStorage.setItem('authToken', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      setSuccess(true);
+
+      // Redirect to dashboard
+      setTimeout(() => {
+        if (data.user.role === 'patient') {
+          router.push('/patient/dashboard');
+        } else if (data.user.role === 'provider') {
+          router.push('/providers/apply');
+        } else {
+          router.push('/driver/dashboard');
+        }
+      }, 1500);
+    } catch (err) {
+      setError('Network error. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -22,6 +64,18 @@ export default function Login() {
           </Link>
 
           <h1 className="text-3xl font-bold mb-6 text-center" style={{ color: '#003366' }}>Login</h1>
+
+          {error && (
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+              ❌ {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded text-green-700 text-sm">
+              ✅ Login successful! Redirecting...
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -50,10 +104,15 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full px-6 py-2 rounded text-white font-semibold"
-              style={{ backgroundColor: '#D4A574' }}
+              disabled={loading || success}
+              className="w-full px-6 py-2 rounded text-white font-semibold transition"
+              style={{
+                backgroundColor: '#D4A574',
+                opacity: loading || success ? 0.7 : 1,
+                cursor: loading || success ? 'not-allowed' : 'pointer'
+              }}
             >
-              Login
+              {loading ? 'Logging in...' : success ? 'Success! Redirecting...' : 'Login'}
             </button>
           </form>
 

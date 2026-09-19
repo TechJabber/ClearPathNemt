@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Logo from '../../components/Logo';
 
 export default function Register() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -10,16 +12,58 @@ export default function Register() {
     lastName: '',
     role: 'patient',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement API call to backend
-    console.log(formData);
+    setLoading(true);
+    setError('');
+
+    try {
+      // Call backend registration API
+      const response = await fetch('http://localhost:3001/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || 'Registration failed. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      // Store auth token
+      localStorage.setItem('authToken', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      setSuccess(true);
+
+      // Redirect to dashboard after 1 second
+      setTimeout(() => {
+        if (formData.role === 'patient') {
+          router.push('/patient/dashboard');
+        } else if (formData.role === 'provider') {
+          router.push('/providers/apply');
+        } else {
+          router.push('/driver/dashboard');
+        }
+      }, 1500);
+    } catch (err) {
+      setError('Network error. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,6 +76,18 @@ export default function Register() {
           </Link>
 
           <h1 className="text-3xl font-bold mb-6 text-center" style={{ color: '#003366' }}>Create Account</h1>
+
+          {error && (
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+              ❌ {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded text-green-700 text-sm">
+              ✅ Account created successfully! Redirecting...
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -104,10 +160,15 @@ export default function Register() {
 
             <button
               type="submit"
-              className="w-full px-6 py-2 rounded text-white font-semibold"
-              style={{ backgroundColor: '#D4A574' }}
+              disabled={loading || success}
+              className="w-full px-6 py-2 rounded text-white font-semibold transition"
+              style={{
+                backgroundColor: '#D4A574',
+                opacity: loading || success ? 0.7 : 1,
+                cursor: loading || success ? 'not-allowed' : 'pointer'
+              }}
             >
-              Create Account
+              {loading ? 'Creating Account...' : success ? 'Success! Redirecting...' : 'Create Account'}
             </button>
           </form>
 
