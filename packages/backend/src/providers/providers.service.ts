@@ -286,6 +286,6 @@ export class ProvidersService {
       rejectionReason: row.rejection_reason,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
-    };
+    } as any;
   }
 }

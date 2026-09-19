@@ -72,7 +72,7 @@ export class InsuranceService {
           expiresAt: new Date(),
         },
         message: 'Failed to verify eligibility',
-      };
+      } as any;
     }
   }
 
@@ -154,7 +154,7 @@ export class InsuranceService {
         website: 'https://goclearpathemt.com',
       },
       lastUpdated: new Date(),
-    };
+    } as any;
   }
 
   private mapBenefitRow(row: any): BenefitInfo {
@@ -173,6 +173,6 @@ export class InsuranceService {
         website: 'https://goclearpathemt.com',
       },
       lastUpdated: new Date(row.last_updated),
-    };
+    } as any;
   }
 }
