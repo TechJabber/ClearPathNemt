@@ -6,6 +6,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { InsuranceModule } from './insurance/insurance.module';
 import { AdminModule } from './admin/admin.module';
 import { HealthModule } from './health/health.module';
+import { DriverModule } from './driver/driver.module';
 import { SupabaseService } from './database/supabase.service';
 
 @Module({
@@ -16,6 +17,7 @@ import { SupabaseService } from './database/supabase.service';
     }),
     HealthModule,
     AuthModule,
+    DriverModule,
     ProvidersModule,
     BookingsModule,
     InsuranceModule,
