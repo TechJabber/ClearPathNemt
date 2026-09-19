@@ -47,6 +47,14 @@ export default function FAQ() {
       q: 'What if I need to cancel my ride?',
       a: 'You can cancel up to 2 hours before your scheduled pickup time by calling us. Late cancellations may be subject to fees.',
     },
+    {
+      q: 'Can I track my ride in real-time?',
+      a: 'Yes! ClearPath offers live GPS tracking for caregivers and family members. You can see the driver\'s real-time location, estimated arrival time, and receive notifications when they\'re 5 minutes away. Log in to your patient account after booking to access the tracking feature.',
+    },
+    {
+      q: 'Is my location information private and secure?',
+      a: 'Absolutely. Location information is only shared during active rides with authorized caregivers you designate. It\'s never stored as history and is not shared with anyone else. Your privacy and security are our top priorities.',
+    },
   ];
 
   return (

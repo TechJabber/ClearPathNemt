@@ -9,7 +9,7 @@ export default function Services() {
     { title: 'Stretcher Rides', desc: 'For patients requiring medical stretchers' },
     { title: 'Companion Care', desc: 'Rides for patients needing a caregiver companion' },
     { title: 'Appointment Scheduling', desc: 'Plan your medical appointments with advance booking' },
-    { title: 'Real-Time Tracking', desc: 'Monitor your ride with GPS tracking' },
+    { title: '🎯 Live GPS Tracking', desc: 'Real-time location sharing for caregivers - see exactly where your loved one is' },
   ];
 
   return (

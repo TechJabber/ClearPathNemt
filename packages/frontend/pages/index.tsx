@@ -69,6 +69,97 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Real-Time Tracking Section */}
+      <section className="py-20 px-4 bg-gradient-to-r from-blue-50 to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold mb-6" style={{ color: '#003366' }}>
+                Peace of Mind for Caregivers
+              </h2>
+              <p className="text-lg text-gray-700 mb-6">
+                Know exactly where your loved one is at every moment. ClearPath's live GPS tracking keeps caregivers and family members informed throughout the entire ride.
+              </p>
+
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">📍</span>
+                  <div>
+                    <h4 className="font-bold mb-1" style={{ color: '#003366' }}>Real-Time Location Tracking</h4>
+                    <p className="text-gray-600">See your patient's location updated every 15 seconds during their ride</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">⏱️</span>
+                  <div>
+                    <h4 className="font-bold mb-1" style={{ color: '#003366' }}>Live ETA Updates</h4>
+                    <p className="text-gray-600">Get accurate estimated arrival times with countdown timer</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">✓</span>
+                  <div>
+                    <h4 className="font-bold mb-1" style={{ color: '#003366' }}>Instant Arrival Alerts</h4>
+                    <p className="text-gray-600">Get notified when the driver is 5 minutes away</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">🔒</span>
+                  <div>
+                    <h4 className="font-bold mb-1" style={{ color: '#003366' }}>Privacy Protected</h4>
+                    <p className="text-gray-600">Location is only shared during the ride, never stored or shared beyond authorized caregivers</p>
+                  </div>
+                </li>
+              </ul>
+
+              <Link
+                href="/patient/book-ride"
+                className="inline-flex items-center gap-2 px-8 py-3 rounded text-white font-semibold group"
+                style={{ backgroundColor: '#D4A574' }}
+              >
+                Experience Live Tracking
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
+              </Link>
+            </div>
+
+            <div className="bg-white p-8 rounded-lg shadow-xl">
+              <div className="bg-gradient-to-b from-blue-50 to-gray-50 rounded-lg p-6 text-center">
+                <div className="text-6xl mb-4">📱</div>
+                <h3 className="text-2xl font-bold mb-4" style={{ color: '#003366' }}>
+                  Patient Dashboard
+                </h3>
+                <div className="space-y-4 text-left">
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                    <span className="text-2xl">🚐</span>
+                    <div>
+                      <p className="font-semibold text-sm" style={{ color: '#003366' }}>Driver Info</p>
+                      <p className="text-xs text-gray-600">John Smith • 8 min away</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                    <span className="text-2xl">📍</span>
+                    <div>
+                      <p className="font-semibold text-sm" style={{ color: '#003366' }}>Live Location</p>
+                      <p className="text-xs text-gray-600">42.3601° N, 71.0589° W</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                    <span className="text-2xl">⏰</span>
+                    <div>
+                      <p className="font-semibold text-sm" style={{ color: '#003366' }}>ETA</p>
+                      <p className="text-xs text-gray-600">2:45 PM • 7 minutes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600 text-center mt-4">
+                Caregivers can view live tracking after booking
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-4" style={{ backgroundColor: '#003366' }}>
         <div className="max-w-4xl mx-auto text-center text-white">
