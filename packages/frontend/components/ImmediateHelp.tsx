@@ -124,20 +124,20 @@ export default function ImmediateHelp() {
           </div>
 
           {/* Additional Info */}
-          <div className="mt-12 bg-white p-6 rounded-lg border-l-4" style={{ borderColor: '#D4A574' }}>
-            <div className="flex gap-4">
-              <CheckCircle2 size={24} style={{ color: '#D4A574' }} className="flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-bold mb-2" style={{ color: '#003366' }}>
+          <div className="mt-8 bg-white p-5 rounded-lg border-l-4" style={{ borderColor: '#D4A574' }}>
+            <div className="flex gap-3">
+              <CheckCircle2 size={20} style={{ color: '#D4A574' }} className="flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h4 className="font-bold mb-3 text-lg" style={{ color: '#003366' }}>
                   Why Choose ClearPath?
                 </h4>
-                <ul className="space-y-2 text-gray-600 text-sm">
-                  <li>✓ Fast response times (30 minutes or less)</li>
-                  <li>✓ Experienced, compassionate drivers</li>
-                  <li>✓ All vehicles wheelchair accessible</li>
-                  <li>✓ Real-time tracking on your ride</li>
-                  <li>✓ Insurance verified at booking</li>
-                  <li>✓ 24/7 customer support</li>
+                <ul className="space-y-2.5 text-gray-600 text-base grid grid-cols-2 gap-x-4">
+                  <li>✓ Fast response times</li>
+                  <li>✓ Experienced drivers</li>
+                  <li>✓ Wheelchair accessible</li>
+                  <li>✓ Real-time tracking</li>
+                  <li>✓ Insurance verified</li>
+                  <li>✓ 24/7 support</li>
                 </ul>
               </div>
             </div>

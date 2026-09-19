@@ -34,13 +34,22 @@ export default function Navigation({ showLoginButton = true }: NavigationProps) 
           </Link>
         </div>
         {showLoginButton && (
-          <Link
-            href="/auth/login"
-            className="px-6 py-2 rounded text-white"
-            style={{ backgroundColor: '#D4A574' }}
-          >
-            Login
-          </Link>
+          <div className="flex gap-3">
+            <Link
+              href="/driver/login"
+              className="px-4 py-2 rounded text-sm font-semibold border-2"
+              style={{ borderColor: '#D4A574', color: '#D4A574' }}
+            >
+              Driver Login
+            </Link>
+            <Link
+              href="/auth/login"
+              className="px-6 py-2 rounded text-white font-semibold"
+              style={{ backgroundColor: '#D4A574' }}
+            >
+              Login
+            </Link>
+          </div>
         )}
       </div>
     </nav>
