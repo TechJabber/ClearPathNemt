@@ -42,8 +42,8 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3001;
   await app.listen(port, () => {
-    logger.log(`🚀 Server running at http://localhost:${port}`);
-    logger.log(`📚 API Docs available at http://localhost:${port}/api/docs`);
+    console.log(`🚀 Server running at http://localhost:${port}`);
+    console.log(`📚 API Docs available at http://localhost:${port}/api/docs`);
   });
 }
 

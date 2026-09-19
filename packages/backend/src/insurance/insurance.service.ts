@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SupabaseService } from '../database/supabase.service';
 import {
-  EligibilityCheck,
   VerifyEligibilityRequest,
   VerifyEligibilityResponse,
   BenefitInfo,
