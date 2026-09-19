@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import Navigation from '../../components/Navigation';
 
 export default function BookRide() {
   const [step, setStep] = useState(1);
@@ -31,17 +32,7 @@ export default function BookRide() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
-      <nav className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold" style={{ color: '#003366' }}>
-            ClearPath NEMT
-          </Link>
-          <div className="flex gap-6">
-            <Link href="/" className="text-gray-700 hover:text-gray-900">Home</Link>
-            <Link href="/patient/dashboard" className="text-gray-700 hover:text-gray-900">Dashboard</Link>
-          </div>
-        </div>
-      </nav>
+      <Navigation showLoginButton={false} />
 
       <section className="py-20 px-4 max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold mb-8 text-center" style={{ color: '#003366' }}>Book a Ride</h1>

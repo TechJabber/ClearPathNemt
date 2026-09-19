@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import Logo from '../../components/Logo';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -15,8 +16,9 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f9fafb' }}>
       <div className="w-full max-w-md">
         <div className="bg-white p-8 rounded-lg shadow">
-          <Link href="/" className="block text-center text-2xl font-bold mb-8" style={{ color: '#003366' }}>
-            ClearPath NEMT
+          <Link href="/" className="flex items-center justify-center gap-2 mb-8 hover:opacity-80 transition">
+            <Logo size="md" />
+            <span className="text-2xl font-bold" style={{ color: '#003366' }}>ClearPath NEMT</span>
           </Link>
 
           <h1 className="text-3xl font-bold mb-6 text-center" style={{ color: '#003366' }}>Login</h1>
