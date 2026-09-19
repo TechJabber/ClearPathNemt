@@ -29,47 +29,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#003366' }}>
-            Why Choose Clear Path?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { icon: Heart, title: 'Compassionate Care', desc: 'Trained drivers experienced with special medical needs' },
-              { icon: Clock, title: 'On-Time Service', desc: 'Reliable scheduling and real-time tracking' },
-              { icon: MapPin, title: 'Wide Coverage', desc: 'Serving MA, CT, RI, VT, NH' },
-              { icon: Users, title: 'Insurance Verified', desc: 'Direct billing with MassHealth & Medicare' },
-            ].map((feature, i) => (
-              <div key={i} className="bg-white p-8 rounded-lg shadow text-center">
-                <feature.icon className="w-12 h-12 mx-auto mb-4" style={{ color: '#D4A574' }} />
-                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Insurance Coverage Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#003366' }}>
-            Accepted Insurance Plans
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {['MassHealth', 'Medicare', 'Medicaid', 'Private Insurance'].map((plan, i) => (
-              <div key={i} className="bg-blue-50 p-8 rounded-lg text-center border-l-4" style={{ borderColor: '#D4A574' }}>
-                <h3 className="text-xl font-bold mb-2" style={{ color: '#003366' }}>{plan}</h3>
-                <p className="text-gray-600">No copay for eligible members</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Real-Time Tracking Section */}
+      {/* Real-Time Tracking Section - MOVED TO TOP */}
       <section className="py-20 px-4 bg-gradient-to-r from-blue-50 to-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -156,6 +116,46 @@ export default function Home() {
                 Caregivers can view live tracking after booking
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#003366' }}>
+            Why Choose ClearPath?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { icon: Heart, title: 'Compassionate Care', desc: 'Trained drivers experienced with special medical needs' },
+              { icon: Clock, title: 'On-Time Service', desc: 'Reliable scheduling and expert drivers' },
+              { icon: MapPin, title: 'Wide Coverage', desc: 'Serving MA, CT, RI, VT, NH' },
+              { icon: Users, title: 'Insurance Verified', desc: 'Direct billing with MassHealth & Medicare' },
+            ].map((feature, i) => (
+              <div key={i} className="bg-white p-8 rounded-lg shadow text-center">
+                <feature.icon className="w-12 h-12 mx-auto mb-4" style={{ color: '#D4A574' }} />
+                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Insurance Coverage Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16" style={{ color: '#003366' }}>
+            Accepted Insurance Plans
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {['MassHealth', 'Medicare', 'Medicaid', 'Private Insurance'].map((plan, i) => (
+              <div key={i} className="bg-blue-50 p-8 rounded-lg text-center border-l-4" style={{ borderColor: '#D4A574' }}>
+                <h3 className="text-xl font-bold mb-2" style={{ color: '#003366' }}>{plan}</h3>
+                <p className="text-gray-600">No copay for eligible members</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
