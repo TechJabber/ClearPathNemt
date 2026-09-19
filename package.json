@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "description": "Clear Path NEMT - Non-Emergency Medical Transportation SaaS",
   "private": true,
-  "packageManager": "npm@8.0.0",
+  "workspaces": [
+    "packages/shared",
+    "packages/backend",
+    "packages/frontend"
+  ],
   "scripts": {
-    "dev": "npm run dev --workspace=packages/backend & npm run dev --workspace=packages/frontend",
+    "dev": "concurrently \"npm run dev --workspace=packages/backend\" \"npm run dev --workspace=packages/frontend\"",
     "dev:backend": "npm run dev --workspace=packages/backend",
     "dev:frontend": "npm run dev --workspace=packages/frontend",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
-    "test:watch": "npm run test:watch --workspaces",
-    "test:cov": "npm run test:cov --workspaces",
     "type-check": "npm run type-check --workspaces",
     "lint": "npm run lint --workspaces",
     "lint:fix": "npm run lint:fix --workspaces",
@@ -20,6 +22,9 @@
     "docker:up": "docker-compose -f services/infra/docker-compose.yml up -d",
     "docker:down": "docker-compose -f services/infra/docker-compose.yml down",
     "docker:logs": "docker-compose -f services/infra/docker-compose.yml logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   },
   "keywords": ["nemt", "medical-transportation", "healthcare", "saas"],
   "author": "Clear Path Labs",
