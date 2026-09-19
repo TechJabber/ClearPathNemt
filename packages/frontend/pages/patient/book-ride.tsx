@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Navigation from '../../components/Navigation';
-import { Users, Wheelchair, Heart, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function BookRide() {
   const [step, setStep] = useState(1);
@@ -106,31 +106,10 @@ export default function BookRide() {
                     }}
                   >
                     <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0">
-                        {service.iconType === 'users' && (
-                          <Users
-                            size={32}
-                            style={{
-                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
-                            }}
-                          />
-                        )}
-                        {service.iconType === 'wheelchair' && (
-                          <Wheelchair
-                            size={32}
-                            style={{
-                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
-                            }}
-                          />
-                        )}
-                        {service.iconType === 'heart' && (
-                          <Heart
-                            size={32}
-                            style={{
-                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
-                            }}
-                          />
-                        )}
+                      <div className="flex-shrink-0 text-4xl">
+                        {service.iconType === 'users' && '👤'}
+                        {service.iconType === 'wheelchair' && '♿'}
+                        {service.iconType === 'heart' && '💓'}
                       </div>
                         <div className="flex-1">
                           <h3 className="text-lg font-bold">{service.title}</h3>
