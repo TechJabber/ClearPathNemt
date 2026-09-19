@@ -9,7 +9,7 @@ export default function Home() {
       <nav className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold" style={{ color: '#003366' }}>
-            Clear Path NEMT
+            ClearPath NEMT
           </div>
           <div className="hidden md:flex gap-6">
             <Link href="/" className="text-gray-700 hover:text-gray-900">Home</Link>
@@ -105,7 +105,7 @@ export default function Home() {
       <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">Clear Path NEMT</h3>
+            <h3 className="font-bold text-lg mb-4">ClearPath NEMT</h3>
             <p className="text-gray-400">Reliable, compassionate medical transportation</p>
           </div>
           <div>
@@ -131,7 +131,7 @@ export default function Home() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2026 Clear Path NEMT. All rights reserved.</p>
+          <p>&copy; 2026 ClearPath NEMT. All rights reserved.</p>
         </div>
       </footer>
     </div>
