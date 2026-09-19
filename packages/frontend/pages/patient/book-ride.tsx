@@ -94,40 +94,40 @@ export default function BookRide() {
                 {serviceTypes.map(service => {
                   const IconComponent = service.icon;
                   return (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => handleServiceSelect(service.id)}
-                    className={`p-6 rounded-lg border-2 text-left transition-all hover:shadow-md ${
-                      formData.rideType === service.id
-                        ? 'border-0 text-white'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    style={{
-                      backgroundColor: formData.rideType === service.id ? '#D4A574' : '#f9fafb',
-                    }}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0">
-                        <IconComponent
-                          size={32}
-                          style={{
-                            color: formData.rideType === service.id ? '#003366' : '#D4A574',
-                          }}
-                        />
+                    <button
+                      key={service.id}
+                      type="button"
+                      onClick={() => handleServiceSelect(service.id)}
+                      className={`p-6 rounded-lg border-2 text-left transition-all hover:shadow-md ${
+                        formData.rideType === service.id
+                          ? 'border-0 text-white'
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                      style={{
+                        backgroundColor: formData.rideType === service.id ? '#D4A574' : '#f9fafb',
+                      }}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0">
+                          <IconComponent
+                            size={32}
+                            style={{
+                              color: formData.rideType === service.id ? '#003366' : '#D4A574',
+                            }}
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold">{service.title}</h3>
+                          <p className={formData.rideType === service.id ? 'opacity-90' : 'text-gray-600'}>
+                            {service.description}
+                          </p>
+                        </div>
+                        {formData.rideType === service.id && (
+                          <CheckCircle2 size={24} style={{ color: '#003366' }} />
+                        )}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold">{service.title}</h3>
-                        <p className={formData.rideType === service.id ? 'opacity-90' : 'text-gray-600'}>
-                          {service.description}
-                        </p>
-                      </div>
-                      {formData.rideType === service.id && (
-                        <CheckCircle2 size={24} style={{ color: '#003366' }} />
-                      )}
-                    </div>
-                  </button>
-                );
+                    </button>
+                  );
                 })}
               </div>
 
