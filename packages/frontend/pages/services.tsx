@@ -4,12 +4,42 @@ import ImmediateHelp from '../components/ImmediateHelp';
 
 export default function Services() {
   const services = [
-    { title: 'Ambulatory Rides', desc: 'For mobile patients who can walk with or without assistance' },
-    { title: 'Wheelchair Accessible', desc: 'Equipped vehicles for wheelchair users' },
-    { title: 'Stretcher Rides', desc: 'For patients requiring medical stretchers' },
-    { title: 'Companion Care', desc: 'Rides for patients needing a caregiver companion' },
-    { title: 'Appointment Scheduling', desc: 'Plan your medical appointments with advance booking' },
-    { title: '🎯 Live GPS Tracking', desc: 'Real-time location sharing for caregivers - see exactly where your loved one is' },
+    {
+      title: 'Ambulatory Rides',
+      desc: 'For mobile patients who can walk with or without assistance',
+      icon: '🚶',
+      color: '#4CAF50'
+    },
+    {
+      title: 'Wheelchair Accessible',
+      desc: 'Equipped vehicles for wheelchair users',
+      icon: '♿',
+      color: '#2196F3'
+    },
+    {
+      title: 'Stretcher Rides',
+      desc: 'For patients requiring medical stretchers',
+      icon: '🛏️',
+      color: '#FF9800'
+    },
+    {
+      title: 'Companion Care',
+      desc: 'Rides for patients needing a caregiver companion',
+      icon: '👥',
+      color: '#9C27B0'
+    },
+    {
+      title: 'Appointment Scheduling',
+      desc: 'Plan your medical appointments with advance booking',
+      icon: '📅',
+      color: '#F44336'
+    },
+    {
+      title: '🎯 Live GPS Tracking',
+      desc: 'Real-time location sharing for caregivers - see exactly where your loved one is',
+      icon: '📍',
+      color: '#00BCD4'
+    },
   ];
 
   return (
@@ -23,9 +53,28 @@ export default function Services() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => (
-              <div key={i} className="bg-gray-50 p-8 rounded-lg border-t-4" style={{ borderColor: '#D4A574' }}>
-                <h3 className="text-2xl font-bold mb-3" style={{ color: '#003366' }}>{service.title}</h3>
-                <p className="text-gray-600">{service.desc}</p>
+              <div
+                key={i}
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
+              >
+                {/* Icon Header */}
+                <div
+                  className="p-8 text-center flex items-center justify-center"
+                  style={{ backgroundColor: service.color, minHeight: '120px' }}
+                >
+                  <span className="text-6xl">{service.icon}</span>
+                </div>
+
+                {/* Content */}
+                <div className="p-8 flex flex-col flex-1">
+                  <h3 className="text-2xl font-bold mb-3" style={{ color: '#003366' }}>
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 flex-1">{service.desc}</p>
+
+                  {/* Bottom accent line */}
+                  <div className="mt-4 pt-4 border-t-2" style={{ borderColor: service.color }}></div>
+                </div>
               </div>
             ))}
           </div>
