@@ -99,6 +99,8 @@ export default function Home() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/services">Services</Link></li>
               <li><Link href="/about">About</Link></li>
+              <li><Link href="/faq">FAQ</Link></li>
+              <li><Link href="/join-us">Join Us</Link></li>
             </ul>
           </div>
           <div>

@@ -23,6 +23,12 @@ export default function Navigation({ showLoginButton = true }: NavigationProps) 
           <Link href="/services" className="text-gray-700 hover:text-gray-900">
             Services
           </Link>
+          <Link href="/faq" className="text-gray-700 hover:text-gray-900">
+            FAQ
+          </Link>
+          <Link href="/join-us" className="text-gray-700 hover:text-gray-900">
+            Join Us
+          </Link>
           <Link href="/contact" className="text-gray-700 hover:text-gray-900">
             Contact
           </Link>
