@@ -89,9 +89,9 @@ export default function ImmediateHelp() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {steps.map((step, index) => (
-              <div key={step.number} className="relative">
+              <div key={step.number} className="relative h-full">
                 {/* Step Card */}
-                <div className="bg-white p-6 rounded-lg shadow-md text-center">
+                <div className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col h-full">
                   {/* Number Circle */}
                   <div
                     className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4"
@@ -109,7 +109,7 @@ export default function ImmediateHelp() {
                   </h4>
 
                   {/* Description */}
-                  <p className="text-gray-600 text-sm">{step.description}</p>
+                  <p className="text-gray-600 text-sm flex-1">{step.description}</p>
                 </div>
 
                 {/* Connector Line */}
