@@ -1,44 +1,46 @@
 import Link from 'next/link';
 import Navigation from '../components/Navigation';
 import ImmediateHelp from '../components/ImmediateHelp';
+import {
+  AmbulatoryImage,
+  WheelchairImage,
+  StretcherImage,
+  CompanionImage,
+  AppointmentImage,
+  GPSTrackingImage,
+} from '../components/ServiceImages';
 
 export default function Services() {
   const services = [
     {
       title: 'Ambulatory Rides',
       desc: 'For mobile patients who can walk with or without assistance',
-      icon: '🚶',
-      color: '#4CAF50'
+      Image: AmbulatoryImage,
     },
     {
       title: 'Wheelchair Accessible',
       desc: 'Equipped vehicles for wheelchair users',
-      icon: '♿',
-      color: '#2196F3'
+      Image: WheelchairImage,
     },
     {
       title: 'Stretcher Rides',
       desc: 'For patients requiring medical stretchers',
-      icon: '🛏️',
-      color: '#FF9800'
+      Image: StretcherImage,
     },
     {
       title: 'Companion Care',
       desc: 'Rides for patients needing a caregiver companion',
-      icon: '👥',
-      color: '#9C27B0'
+      Image: CompanionImage,
     },
     {
       title: 'Appointment Scheduling',
       desc: 'Plan your medical appointments with advance booking',
-      icon: '📅',
-      color: '#F44336'
+      Image: AppointmentImage,
     },
     {
-      title: '🎯 Live GPS Tracking',
+      title: 'Live GPS Tracking',
       desc: 'Real-time location sharing for caregivers - see exactly where your loved one is',
-      icon: '📍',
-      color: '#00BCD4'
+      Image: GPSTrackingImage,
     },
   ];
 
@@ -55,14 +57,13 @@ export default function Services() {
             {services.map((service, i) => (
               <div
                 key={i}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
               >
-                {/* Icon Header */}
-                <div
-                  className="p-8 text-center flex items-center justify-center"
-                  style={{ backgroundColor: service.color, minHeight: '120px' }}
-                >
-                  <span className="text-6xl">{service.icon}</span>
+                {/* Image Header */}
+                <div className="w-full h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center">
+                  <div className="w-full h-full">
+                    <service.Image />
+                  </div>
                 </div>
 
                 {/* Content */}
@@ -70,10 +71,10 @@ export default function Services() {
                   <h3 className="text-2xl font-bold mb-3" style={{ color: '#003366' }}>
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 flex-1">{service.desc}</p>
+                  <p className="text-gray-600 flex-1 leading-relaxed">{service.desc}</p>
 
                   {/* Bottom accent line */}
-                  <div className="mt-4 pt-4 border-t-2" style={{ borderColor: service.color }}></div>
+                  <div className="mt-4 pt-4 border-t-2" style={{ borderColor: '#D4A574' }}></div>
                 </div>
               </div>
             ))}
